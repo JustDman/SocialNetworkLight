@@ -1,47 +1,92 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
- * Die Klasse NewsFeed speichert neue Einsendungen für den Newsfeed einer 
+ * Die Klasse NewsFeed speichert neue Einsendungen fuer den Newsfeed einer 
  * Sozialen-Netzwerk-Anwendung (wie Facebook oder Google+).
  * 
  * Derzeit wird das Anzeigen der Einsendungen durch die Ausgabe auf die Konsole simuliert.
- * (Später soll die Anzeige in einem Webbrowser erfolgen.)
+ * (Spaeter soll die Anzeige in einem Webbrowser erfolgen.)
  * 
- * Diese Version speichert keine Daten auf Festplatte. Auch gibt es keine Unterstützung für
+ * Diese Version speichert keine Daten auf Festplatte. Auch gibt es keine Unterstuetzung fuer
  * das Durchsuchen oder Anordnen der Einsendungen.
  */
-public class NewsFeed
-{
-    private ArrayList<NachrichtenEinsendung> nachrichten;
-    private ArrayList<FotoEinsendung> fotos;
+public class NewsFeed {
+    private ArrayList<Einsendung> einsendungen = new ArrayList<>();
 
     /**
-     * Erzeuge einen leeren Newsfeed.
+     * Fuege dem Newsfeed eine Einsendung hinzu.
+     * 
+     * @param einsendung  die Einsendung, die hinzugefuegt werden soll.
      */
-    public NewsFeed()
-    {
-        nachrichten = new ArrayList<NachrichtenEinsendung>();
-        fotos = new ArrayList<FotoEinsendung>();
+    public void erfasseEinsendung(Einsendung einsendung) {
+
+        einsendungen.add(einsendung);
     }
 
     /**
-     * Füge dem Newsfeed eine eingesendete Nachricht hinzu.
-     * 
-     * @param text  der eingesendete Text, der hinzugefügt werden soll.
+     * Loescht eine Einsendung aus dem Feed.
+     * @param einsendung die Einsendung, die geloescht werden soll.
      */
-    public void erfasseNachricht(NachrichtenEinsendung nachricht)
-    {
-        nachrichten.add(nachricht);
+    public void loescheNachricht(Einsendung einsendung) {
+
+        if (einsendungen.contains(einsendung))
+            einsendungen.remove(einsendung);
+        else
+            System.out.println("Nachricht nicht gefunden!");
     }
 
     /**
-     * Füge dem Newsfeed ein eingesendetes Foto hinzu.
-     * 
-     * @param foto  das eingesendete Foto, das hinzugefügt werden soll.
+     * Loescht eine Einsendung aus dem Feed.
+     * @param index der Index der Einsendung im Feed.
      */
-    public void erfasseFoto(FotoEinsendung foto)
-    {
-        fotos.add(foto);
+    public void loescheNachricht(int index) {
+        if (index < einsendungen.size() && index >= 0)
+            einsendungen.remove(index);
+    }
+
+    /**
+     * Alle Einsendungen eines Benutzers bekommen.
+     * @param user der Benutzer, dessen Einsendungen ausgegeben werden sollen.
+     * @return eine ArrayList mit allen Einsendungen des Benutzers
+     */
+    public ArrayList<Einsendung> sucheUeberBenutzer(String user) {
+
+        ArrayList<Einsendung> ret = new ArrayList<>();
+
+        for (Einsendung e : einsendungen) {
+            if (e.benutzername.equals(user)) {
+                ret.add(e);
+            }
+        }
+
+        return ret;
+    }
+
+    /**
+     * Alle Benutzer bekommen.
+     * @return ein HashSet, welches alle Benutzer beinhaltet.
+     */
+    public HashSet<String> alleBenutzer() {
+
+        HashSet<String> namen = new HashSet<>();
+        for (Einsendung es : einsendungen) {
+            namen.add(es.gibBenutzername());
+        }
+        return namen;
+    }
+
+    /**
+     * Alle Nachrichten eines Benutzers ausgeben.
+     * @param user der Benutzer, dessen Nachrichten ausgegeben werden sollen.
+     */
+    public void ausgebenBenutzer(String user) {
+
+        sucheUeberBenutzer(user).forEach(e -> {
+            System.out.println("Index: " + einsendungen.indexOf(e));
+            e.anzeigen();
+            System.out.println();
+        });
     }
 
     /**
@@ -49,18 +94,11 @@ public class NewsFeed
      * Konsole ausgegeben. (Noch zu tun: ersetze diesen Code durch die Anzeige im
      * Webbrowser.)
      */
-    public void zeigen()
-    {
+    public void zeigen() {
         // alle Text-Einsendungen anzeigen
-        for(NachrichtenEinsendung nachricht : nachrichten) {
-            nachricht.anzeigen();
-            System.out.println();   // leere Zeile zwischen den Einsendungen
-        }
-
-        // alle Fotos anzeigen
-        for(FotoEinsendung foto : fotos) {
-            foto.anzeigen();
-            System.out.println();   // leere Zeile zwischen den Einsendungen
-        }
+        einsendungen.forEach(e -> {
+            e.anzeigen();
+            System.out.println();
+        });
     }
 }
