@@ -8,7 +8,7 @@ public class Kommandozeilenmenue {
 	/**
 	 * Gibt das Menue mit den Nachrichten aus.
 	 */
-	public void MenueAnzeigen() {
+	private void MenueAnzeigen() {
 
 		System.out.println("MENUE");
 		System.out.println("1) Nachricht erstellen");
@@ -52,7 +52,7 @@ public class Kommandozeilenmenue {
 	/**
 	 * Erstellt eine neue Einsendung.
 	 */
-	public void erstellen() {
+	private void erstellen() {
 
 		String s = "-";
 		String username = "";
@@ -95,7 +95,7 @@ public class Kommandozeilenmenue {
 	/**
 	 * Löscht eine Nachricht eines Benutzers.
 	 */
-	public void loeschen() {
+	private void loeschen() {
 
 		vonBenutzerSuchen();
 		int g = 0;
@@ -109,7 +109,7 @@ public class Kommandozeilenmenue {
 	/**
 	 * Gibt alle Einsendungen aus.
 	 */
-	public void ausgabeAlle() {
+	private void ausgabeAlle() {
 
 		feed.zeigen();
 		System.out.println();
@@ -118,7 +118,7 @@ public class Kommandozeilenmenue {
 	/**
 	 * Gibt alle Nachrichten eines Benutzers aus.
 	 */
-	public void vonBenutzerSuchen() {
+	private void vonBenutzerSuchen() {
 
 		String s = "-";
 		System.out.println("Von welchem Benutzer wollen Sie Nachrichten lesen?");
@@ -134,7 +134,7 @@ public class Kommandozeilenmenue {
 	/**
 	 * Fehler
 	 */
-	public void fehler() {
+	private void fehler() {
 
 		System.out.println("Fehlerhafte Eingabe!"); // ENGLISCH DO YOU SPEAK IT !?
 	}
